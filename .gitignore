@@ -1,0 +1,14 @@
+.DS_Store
+*.log
+
+# IDE
+.idea
+
+# Composer
+vendor
+composer.lock
+
+# PHPUnit
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         colors="true"
+         stopOnFailure="true"
+         bootstrap="./vendor/autoload.php"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true">
+    <testsuites>
+        <testsuite name="tests">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <const name="API_KEY" value="{{EPIGEON_API_KEY}}"/>
+        <const name="LIST_KEY" value="{{EPIGEON_LIST_KEY}}"/>
+        <const name="FEED_KEY" value="{{EPIGEON_FEED_KEY}}"/>
+        <const name="SENDER_DOMAIN" value="{{EPIGEON_SENDER_DOMAIN}}"/>
+    </php>
+</phpunit>
