@@ -10,6 +10,10 @@ use Epigeon\HttpClient\HttpRequest;
  */
 class SubscriberPostRequest extends HttpRequest {
     const PATH = '/subscribers';
+
+    /**
+     * SubscriberPostRequest constructor.
+     */
     public function __construct()
     {
         parent::__construct(self::PATH, "POST");

@@ -15,6 +15,12 @@ class SubscribersActivityOpenGetRequest extends HttpRequest {
         'page_number'
     ];
     const PATH = '/subscribers/activity/open?list={list}';
+
+    /**
+     * SubscribersActivityOpenGetRequest constructor.
+     * @param string $list
+     * @param array $args
+     */
     public function __construct(string $list, array $args)
     {
         $path = str_replace( '{list}', urlencode( $list ), self::PATH );

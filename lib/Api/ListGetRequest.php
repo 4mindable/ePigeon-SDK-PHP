@@ -8,6 +8,7 @@ class ListGetRequest extends HttpRequest {
     const PATH = '/lists/{list}';
 
     /**
+     * ListGetRequest constructor.
      * @param string $list
      */
     public function __construct( string $list ) {

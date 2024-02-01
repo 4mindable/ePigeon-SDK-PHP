@@ -19,6 +19,7 @@ use Epigeon\HttpClient\HttpClientAbstract;
 class HttpClient extends HttpClientAbstract {
 
     /**
+     * HttpClient constructor.
      * @param Environment $environment
      */
     public function __construct( Environment $environment ) {

@@ -11,6 +11,10 @@ use Epigeon\HttpClient\HttpRequest;
 class CampaignPostRequest extends HttpRequest
 {
     const PATH = '/campaigns';
+
+    /**
+     * CampaignPostRequest constructor.
+     */
     public function __construct()
     {
         parent::__construct(self::PATH, "POST");
