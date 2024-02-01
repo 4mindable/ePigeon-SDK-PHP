@@ -1,6 +1,6 @@
 {
     "name": "4mindable/epigeon-sdk-php",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "ePigeon's PHP SDK for REST APIs",
     "keywords": ["ePigeon", "email marketing", "rest", "sdk"],
     "type": "library",
@@ -28,9 +28,5 @@
             "EpigeonTest\\" : "tests/"
         },
         "classmap": ["lib"]
-    },
-    "dist": {
-        "url": "https://github.com/4mindable/ePigeon-SDK-PHP.git",
-        "type": "zip"
     }
 }
