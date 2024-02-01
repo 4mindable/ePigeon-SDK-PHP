@@ -1,11 +1,5 @@
 <?php
-/*
- * Blogs Herder Editorial
- * (C) 2022 - Herder Editorial SL, Barcelona
- *
- * @author: Luis M. Bodero
- * Date: 2022-7-22
- */
+
 
 namespace Epigeon\HttpClient;
 

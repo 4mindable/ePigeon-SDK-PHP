@@ -9,10 +9,12 @@ use Epigeon\HttpClient\HttpRequest;
  * Class ApiKeyInjector
  * @package Epigeon\Api
  */
-class ApiKeyInjector implements HeaderInjectorInterface {
+class ApiKeyInjector implements HeaderInjectorInterface
+{
     private $client_key;
 
     /**
+     * ApiKeyInjector constructor.
      * @param string $client_key
      */
     public function __construct(string $client_key)

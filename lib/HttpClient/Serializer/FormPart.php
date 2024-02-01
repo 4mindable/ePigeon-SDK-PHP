@@ -2,6 +2,10 @@
 
 namespace Epigeon\HttpClient\Serializer;
 
+/**
+ * Class FormPart
+ * @package Epigeon\HttpClient\Serializer
+ */
 class FormPart
 {
     private $value;

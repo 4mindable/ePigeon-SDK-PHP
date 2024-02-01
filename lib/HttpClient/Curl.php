@@ -1,11 +1,5 @@
 <?php
-/*
- * Blogs Herder Editorial
- * (C) 2022 - Herder Editorial SL, Barcelona
- *
- * @author: Luis M. Bodero
- * Date: 2022-7-22
- */
+
 
 namespace Epigeon\HttpClient;
 
@@ -18,46 +12,83 @@ namespace Epigeon\HttpClient;
  */
 class Curl
 {
-    protected $curl;
+    protected \CurlHandle|false $curl;
 
+    /**
+     * Curl constructor.
+     * @param $curl
+     */
     public function __construct($curl = NULL)
     {
-
-        if (is_null($curl))
-        {
+        if (is_null($curl)) {
             $curl = curl_init();
         }
         $this->curl = $curl;
     }
 
-    public function setOpt($option, $value)
+    /**
+     * function setOpt
+     *
+     * @param $option
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setOpt($option, $value): static
     {
         curl_setopt($this->curl, $option, $value);
         return $this;
     }
 
-    public function close()
+    /**
+     * function close
+     *
+     * @return $this
+     */
+    public function close(): static
     {
         curl_close($this->curl);
         return $this;
     }
 
-    public function exec()
+    /**
+     * function exec
+     *
+     * @return bool|string
+     */
+    public function exec(): bool|string
     {
         return curl_exec($this->curl);
     }
 
-    public function errNo()
+    /**
+     * function errNo
+     *
+     * @return int
+     */
+    public function errNo(): int
     {
         return curl_errno($this->curl);
     }
 
-    public function getInfo($option)
+    /**
+     * function getInfo
+     *
+     * @param $option
+     *
+     * @return mixed
+     */
+    public function getInfo($option): mixed
     {
         return curl_getinfo($this->curl, $option);
     }
 
-    public function error()
+    /**
+     * function error
+     *
+     * @return string
+     */
+    public function error(): string
     {
         return curl_error($this->curl);
     }

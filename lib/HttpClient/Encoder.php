@@ -15,8 +15,11 @@ use Epigeon\HttpClient\Serializer\Text;
  */
 class Encoder
 {
-    private $serializers = [];
+    private array $serializers = [];
 
+    /**
+     * Encoder constructor.
+     */
     function __construct()
     {
         $this->serializers[] = new Json();
@@ -25,9 +28,15 @@ class Encoder
         $this->serializers[] = new Form();
     }
 
-
-
-    public function serializeRequest(HttpRequest $request)
+    /**
+     * function serializeRequest
+     *
+     * @param HttpRequest $request
+     *
+     * @return false|string
+     * @throws \Exception
+     */
+    public function serializeRequest(HttpRequest $request): false|string
     {
         if (!array_key_exists('Content-Type', $request->headers)) {
             var_export($request->headers);
@@ -60,8 +69,16 @@ class Encoder
         return $serialized;
     }
 
-
-    public function deserializeResponse($responseBody, $headers)
+    /**
+     * function deserializeResponse
+     *
+     * @param $responseBody
+     * @param $headers
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deserializeResponse($responseBody, $headers): mixed
     {
 
         if (!array_key_exists('content-type', $headers)) {
@@ -86,7 +103,15 @@ class Encoder
         return $serializer->decode($responseBody);
     }
 
-    private function serializer($contentType)
+    /**
+     * function serializer
+     *
+     * @param $contentType
+     *
+     * @return SerializerInterface|null
+     * @throws \Exception
+     */
+    private function serializer($contentType): ?SerializerInterface
     {
         /** @var SerializerInterface $serializer */
         foreach ($this->serializers as $serializer) {
@@ -101,10 +126,15 @@ class Encoder
             }
         }
 
-        return NULL;
+        return null;
     }
 
-    private function supportedEncodings()
+    /**
+     * function supportedEncodings
+     *
+     * @return array
+     */
+    private function supportedEncodings(): array
     {
         $values = [];
         /** @var SerializerInterface $serializer */

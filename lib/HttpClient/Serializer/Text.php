@@ -13,13 +13,24 @@ use Epigeon\HttpClient\SerializerInterface;
  */
 class Text implements SerializerInterface
 {
-
-    public function contentType()
+    /**
+     * function contentType
+     *
+     * @return string
+     */
+    public function contentType(): string
     {
         return "/^text\\/.*/";
     }
 
-    public function encode(HttpRequest $request)
+    /**
+     * function encode
+     *
+     * @param HttpRequest $request
+     *
+     * @return false|string
+     */
+    public function encode(HttpRequest $request): false|string
     {
         $body = $request->body;
         if (is_string($body)) {
@@ -31,6 +42,13 @@ class Text implements SerializerInterface
         return implode(" ", $body);
     }
 
+    /**
+     * function decode
+     *
+     * @param $data
+     *
+     * @return mixed
+     */
     public function decode($data)
     {
         return $data;

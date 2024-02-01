@@ -1,11 +1,5 @@
 <?php
-/*
- * Blogs Herder Editorial
- * (C) 2022 - Herder Editorial SL, Barcelona
- *
- * @author: Luis M. Bodero
- * Date: 2022-7-22
- */
+
 
 namespace Epigeon\HttpClient;
 
@@ -20,17 +14,17 @@ abstract class HttpClientAbstract
     /**
      * @var EnvironmentInterface
      */
-    public $environment;
+    public EnvironmentInterface $environment;
 
     /**
-     * @var Injector[]
+     * @var array
      */
-    public $injectors = [];
+    public array $injectors = [];
 
     /**
      * @var Encoder
      */
-    public $encoder;
+    public Encoder $encoder;
 
     /**
      * HttpClient constructor. Pass the environment you wish to make calls to.
@@ -63,6 +57,7 @@ abstract class HttpClientAbstract
      *
      * @return HttpResponse
      * @throws HttpException
+     * @throws \Exception
      */
     public function execute(HttpRequest $httpRequest): HttpResponse {
         $requestCpy = clone $httpRequest;
@@ -111,7 +106,8 @@ abstract class HttpClientAbstract
      * @param $headers
      * @return array
      */
-    public function prepareHeaders($headers){
+    public function prepareHeaders($headers): array
+    {
         $preparedHeaders = array_change_key_case($headers);
         if (array_key_exists("content-type", $preparedHeaders)) {
             $preparedHeaders["content-type"] = strtolower($preparedHeaders["content-type"]);
@@ -126,7 +122,8 @@ abstract class HttpClientAbstract
      * @param $formattedHeaders
      * @return array
      */
-    public function mapHeaders($rawHeaders, $formattedHeaders){
+    public function mapHeaders($rawHeaders, $formattedHeaders): array
+    {
         $rawHeadersKey = array_keys($rawHeaders);
         foreach ($rawHeadersKey as $array_key) {
             if(array_key_exists(strtolower($array_key), $formattedHeaders)){
@@ -138,24 +135,21 @@ abstract class HttpClientAbstract
 
     /**
      * Return the filepath to your custom CA Cert if needed.
-     * @return string
+     * @return string|null
      */
-    protected function getCACertFilePath()
+    protected function getCACertFilePath(): ?string
     {
         return null;
     }
 
-    protected function setCurl(Curl $curl)
-    {
-        $this->curl = $curl;
-    }
-
-    protected function setEncoder(Encoder $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
-    private function serializeHeaders($headers)
+    /**
+     * function serializeHeaders
+     *
+     * @param $headers
+     *
+     * @return array
+     */
+    private function serializeHeaders($headers): array
     {
         $headerArray = [];
         if ($headers) {
@@ -175,7 +169,7 @@ abstract class HttpClientAbstract
      * @return HttpResponse
      * @throws HttpException
      */
-    private function parseResponse($curl)
+    private function parseResponse($curl): HttpResponse
     {
         $headers = [];
         $curl->setOpt(CURLOPT_HEADERFUNCTION,
@@ -224,11 +218,20 @@ abstract class HttpClientAbstract
         }
     }
 
-    private function deserializeHeader($header, &$key, &$value)
+    /**
+     * function deserializeHeader
+     *
+     * @param $header
+     * @param $key
+     * @param $value
+     *
+     * @return void
+     */
+    private function deserializeHeader($header, &$key, &$value): void
     {
         if (strlen($header) > 0) {
-            if (empty($header) || strpos($header, ':') === false) {
-                return NULL;
+            if (empty($header) || !str_contains($header, ':')) {
+                return;
             }
 
             [$k, $v] = explode(":", $header);

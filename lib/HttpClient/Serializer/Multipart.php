@@ -18,12 +18,25 @@ class Multipart implements SerializerInterface
 {
     const LINEFEED = "\r\n";
 
-    public function contentType()
+    /**
+     * function contentType
+     *
+     * @return string
+     */
+    public function contentType(): string
     {
         return "/^multipart\/.*$/";
     }
 
-    public function encode(HttpRequest $request)
+    /**
+     * function encode
+     *
+     * @param HttpRequest $request
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public function encode(HttpRequest $request): string
     {
         if (!is_array($request->body) || !$this->isAssociative($request->body))
         {
@@ -65,17 +78,41 @@ class Multipart implements SerializerInterface
         return implode(self::LINEFEED, $body);
     }
 
+    /**
+     * function decode
+     *
+     * @param $data
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function decode($data)
     {
         throw new \Exception("Multipart does not support deserialization");
     }
 
+    /**
+     * function isAssociative
+     *
+     * @param array $array
+     *
+     * @return bool
+     */
     private function isAssociative(array $array)
     {
         return array_values($array) !== $array;
     }
 
-    private function prepareFormField($partName, $value, $boundary)
+    /**
+     * function prepareFormField
+     *
+     * @param $partName
+     * @param $value
+     * @param $boundary
+     *
+     * @return string
+     */
+    private function prepareFormField($partName, $value, $boundary): string
     {
         return implode(self::LINEFEED, [
             "Content-Disposition: form-data; name=\"{$partName}\"",
@@ -84,7 +121,16 @@ class Multipart implements SerializerInterface
         ]);
     }
 
-    private function prepareFilePart($partName, $file, $boundary)
+    /**
+     * function prepareFilePart
+     *
+     * @param $partName
+     * @param $file
+     * @param $boundary
+     *
+     * @return string
+     */
+    private function prepareFilePart($partName, $file, $boundary): string
     {
         $fileInfo = new finfo(FILEINFO_MIME_TYPE);
         $filePath = stream_get_meta_data($file)['uri'];
@@ -103,18 +149,28 @@ class Multipart implements SerializerInterface
         ]);
     }
 
-    private function prepareFormPart($partName, $formPart, $boundary)
+    /**
+     * function prepareFormPart
+     *
+     * @param $partName
+     * @param $formPart
+     * @param $boundary
+     *
+     * @return string
+     * @throws \Exception
+     */
+    private function prepareFormPart($partName, $formPart, $boundary): string
     {
         $contentDisposition = "Content-Disposition: form-data; name=\"{$partName}\"";
 
         $partHeaders = $formPart->getHeaders();
-        $formattedheaders = array_change_key_case($partHeaders);
-        if (array_key_exists("content-type", $formattedheaders)) {
-            if ($formattedheaders["content-type"] === "application/json") {
+        $formatted_headers = array_change_key_case($partHeaders);
+        if (array_key_exists("content-type", $formatted_headers)) {
+            if ($formatted_headers["content-type"] === "application/json") {
                 $contentDisposition .= "; filename=\"{$partName}.json\"";
             }
             $tempRequest = new HttpRequest('/', 'POST');
-            $tempRequest->headers = $formattedheaders;
+            $tempRequest->headers = $formatted_headers;
             $tempRequest->body = $formPart->getValue();
             $encoder = new Encoder();
             $partValue = $encoder->serializeRequest($tempRequest);

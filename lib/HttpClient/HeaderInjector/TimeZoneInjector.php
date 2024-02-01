@@ -13,6 +13,7 @@ class TimeZoneInjector implements HeaderInjectorInterface {
     private $timezone;
 
     /**
+     * TimeZoneInjector constructor.
      * @param string $timezone
      */
     public function __construct(string $timezone)

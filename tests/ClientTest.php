@@ -8,10 +8,13 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ClientTest
  * @package unit
- * @author Luis M. Bodero
  */
 class ClientTest extends TestCase
 {
+    /**
+     * function test__construct
+     * @return void
+     */
     public function test__construct() {
         if(!defined("API_KEY")){
             $this->fail('Falta definir la constante API_KEY');

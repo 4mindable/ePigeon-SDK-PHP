@@ -7,8 +7,16 @@ use Epigeon\Api\HttpClient;
 use Epigeon\Api\ListGetRequest;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class ListGetRequestTest
+ * @package EpigeonTest\Api
+ */
 class ListGetRequestTest extends TestCase
 {
+    /**
+     * function test__construct
+     * @return void
+     */
     public function test__construct() {
         if(!defined("API_KEY")){
             $this->fail('API_KEY constant is missing');
@@ -21,9 +29,15 @@ class ListGetRequestTest extends TestCase
         $this->assertInstanceOf(ListGetRequest::class, $list_request);
     }
 
+    /**
+     * function testExecute
+     * @return void
+     * @throws \Epigeon\HttpClient\HttpException
+     */
     public function testExecute()
     {
-        $environment = new Environment(API_KEY, LIST_KEY);
+        $host = defined('API_HOST')?API_HOST:'api.epigeon.net';
+        $environment = new Environment($host, API_KEY, LIST_KEY);
         $http_client = new HttpClient($environment);
         $list_request = new ListGetRequest($environment->getList());
         $list_response = $http_client->execute($list_request);

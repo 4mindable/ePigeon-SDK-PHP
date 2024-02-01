@@ -7,8 +7,16 @@ use Epigeon\Api\HttpClient;
 use Epigeon\Api\SubscriberGetRequest;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class SubscriberGetRequestTest
+ * @package EpigeonTest\Api
+ */
 class SubscriberGetRequestTest extends TestCase
 {
+    /**
+     * function test__construct
+     * @return void
+     */
     public function test__construct()
     {
         if(!defined("API_KEY")){
@@ -22,31 +30,50 @@ class SubscriberGetRequestTest extends TestCase
         $this->assertInstanceOf(SubscriberGetRequest::class, $subscriber_request);
     }
 
+    /**
+     * function testBadEmailExecute
+     * @return void
+     * @throws \Epigeon\HttpClient\HttpException
+     */
     public function testBadEmailExecute()
     {
         $this->expectExceptionMessageMatches('/.*Is not a valid email.*/');
-        $environment = new Environment(API_KEY, LIST_KEY);
+        $host = defined('API_HOST')?API_HOST:'api.epigeon.net';
+        $environment = new Environment($host, API_KEY, LIST_KEY);
         $http_client = new HttpClient($environment);
         $subscriber_request = new SubscriberGetRequest('bad-email', $environment->getList());
         $subscriber_response = $http_client->execute($subscriber_request);
     }
 
+    /**
+     * function testBadSubscriberExecute
+     * @return void
+     * @throws \Epigeon\HttpClient\HttpException
+     */
     public function testBadSubscriberExecute()
     {
         $this->expectExceptionMessageMatches('/.*Not found.*/');
-        $environment = new Environment(API_KEY, LIST_KEY);
+        $host = defined('API_HOST')?API_HOST:'api.epigeon.net';
+        $environment = new Environment($host,API_KEY, LIST_KEY);
         $http_client = new HttpClient($environment);
         $subscriber_request = new SubscriberGetRequest('bad@epigeon.net', $environment->getList());
         $subscriber_response = $http_client->execute($subscriber_request);
     }
 
+    /**
+     * function testExecute
+     * @return void
+     * @throws \Epigeon\HttpClient\HttpException
+     */
     public function testExecute()
     {
         if(!defined("SUBSCRIBER_EMAIL")){
             $this->fail('SUBSCRIBER_EMAIL constant is missing');
         }
 
-        $environment = new Environment(API_KEY, LIST_KEY);
+        $host = defined('API_HOST')?API_HOST:'api.epigeon.net';
+        $environment = new Environment($host,API_KEY, LIST_KEY);
+
         $http_client = new HttpClient($environment);
         $subscriber_request = new SubscriberGetRequest(SUBSCRIBER_EMAIL, $environment->getList());
         $subscriber_response = $http_client->execute($subscriber_request);

@@ -18,16 +18,18 @@ use Epigeon\HttpClient\HttpException;
  */
 class Client {
     const DEFAULT_TIMEZONE = 'Europe/Madrid';
+    const API_HOST = 'api.epigeon.net';
     private Environment $environment;
-
     private HttpClient $http_client;
 
     /**
      * @param string $client_key
      * @param string $list
      */
-    public function __construct(string $client_key, string $list){
-        $this->environment = new Environment($client_key, $list);
+    public function __construct(string $client_key, string $list)
+    {
+        $host = defined('API_HOST')?API_HOST:self::API_HOST;
+        $this->environment = new Environment($host, $client_key, $list);
         $this->http_client = new HttpClient($this->environment);
     }
 
@@ -66,7 +68,8 @@ class Client {
      * @return array|object|string
      * @throws HttpException
      */
-    public function postCampaign(array $arguments) {
+    public function postCampaign(array $arguments)
+    {
         $arguments['list'] = $this->environment->getList();
         $campaign_request = new CampaignPostRequest();
         $campaign_request->setBody($arguments);
@@ -82,7 +85,8 @@ class Client {
      * @return array|object|string
      * @throws HttpException
      */
-    public function getSubscriber(string $email) {
+    public function getSubscriber(string $email)
+    {
         $subscriber_request = new SubscriberGetRequest($email, $this->environment->getList());
         $subscriber_response = $this->http_client->execute($subscriber_request);
         return $subscriber_response->getResponse();
@@ -109,7 +113,8 @@ class Client {
      * @return array|object|string
      * @throws HttpException
      */
-    public function getSubscribersActivity(string $type, array $args) {
+    public function getSubscribersActivity(string $type, array $args)
+    {
         $subscriber_activity = match ($type) {
             'open' => new SubscribersActivityOpenGetRequest($this->environment->getList(), $args),
             'click' => new SubscribersActivityClickGetRequest($this->environment->getList(), $args),

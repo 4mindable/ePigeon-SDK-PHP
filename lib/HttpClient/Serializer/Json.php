@@ -13,13 +13,25 @@ use Epigeon\HttpClient\SerializerInterface;
  */
 class Json implements SerializerInterface
 {
-
-    public function contentType()
+    /**
+     * function contentType
+     *
+     * @return string
+     */
+    public function contentType(): string
     {
         return "/^application\\/json/";
     }
 
-    public function encode(HttpRequest $request)
+    /**
+     * function encode
+     *
+     * @param HttpRequest $request
+     *
+     * @return false|string
+     * @throws \Exception
+     */
+    public function encode(HttpRequest $request): false|string
     {
         $body = $request->body;
         if (is_string($body)) {
