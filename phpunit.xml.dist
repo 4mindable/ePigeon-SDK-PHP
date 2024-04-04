@@ -19,5 +19,6 @@
         <const name="LIST_KEY" value="{{EPIGEON_LIST_KEY}}"/>
         <const name="FEED_KEY" value="{{EPIGEON_FEED_KEY}}"/>
         <const name="SENDER_DOMAIN" value="{{EPIGEON_SENDER_DOMAIN}}"/>
+        <const name="SUBSCRIBER_EMAIL" value="{{SUBSCRIBER_EMAIL}}"/>
     </php>
 </phpunit>

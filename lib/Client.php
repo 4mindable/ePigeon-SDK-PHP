@@ -8,6 +8,7 @@ use Epigeon\Api\Environment;
 use Epigeon\Api\HttpClient;
 use Epigeon\Api\ListGetRequest;
 use Epigeon\Api\SubscriberGetRequest;
+use Epigeon\Api\SubscriberPostRequest;
 use Epigeon\Api\SubscribersActivityClickGetRequest;
 use Epigeon\Api\SubscribersActivityOpenGetRequest;
 use Epigeon\HttpClient\HttpException;
@@ -88,8 +89,24 @@ class Client {
     public function getSubscriber(string $email)
     {
         $subscriber_request = new SubscriberGetRequest($email, $this->environment->getList());
-        $subscriber_response = $this->http_client->execute($subscriber_request);
-        return $subscriber_response->getResponse();
+
+        return $this->http_client->execute($subscriber_request)->getResponse();
+    }
+
+    /**
+     * function postSubscriber
+     *
+     * @param array $subscriber
+     *
+     * @return array|object|string
+     * @throws HttpException
+     */
+    public function postSubscriber(array $subscriber) {
+        $subscriber_request = new SubscriberPostRequest();
+        $subscriber['list'] = $this->environment->getList();
+        $subscriber_request->setBody($subscriber);
+
+        return $this->http_client->execute($subscriber_request)->getResponse();
     }
 
     /**

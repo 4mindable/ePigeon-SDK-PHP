@@ -15,7 +15,7 @@ class SubscribersActivityClickGetRequest extends HttpRequest
         'page_size',
         'page_number'
     ];
-    const PATH = '/subscribers/activity/click?list={list}&page_size=50';
+    const PATH = '/subscribers/activity/click?list={list}';
 
     /**
      * SubscribersActivityClickGetRequest constructor.
