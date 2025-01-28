@@ -5,6 +5,7 @@ namespace EpigeonTest\Api;
 use Epigeon\Api\Environment;
 use Epigeon\Api\HttpClient;
 use Epigeon\Api\SubscriberGetRequest;
+use Epigeon\HttpClient\HttpException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,7 +34,7 @@ class SubscriberGetRequestTest extends TestCase
     /**
      * function testBadEmailExecute
      * @return void
-     * @throws \Epigeon\HttpClient\HttpException
+     * @throws HttpException
      */
     public function testBadEmailExecute()
     {
@@ -48,7 +49,7 @@ class SubscriberGetRequestTest extends TestCase
     /**
      * function testBadSubscriberExecute
      * @return void
-     * @throws \Epigeon\HttpClient\HttpException
+     * @throws HttpException
      */
     public function testBadSubscriberExecute()
     {
@@ -63,7 +64,7 @@ class SubscriberGetRequestTest extends TestCase
     /**
      * function testExecute
      * @return void
-     * @throws \Epigeon\HttpClient\HttpException
+     * @throws HttpException
      */
     public function testExecute()
     {
